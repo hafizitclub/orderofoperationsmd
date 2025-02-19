@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- Updated title -->
   <title>Order of operations (x and ÷)</title>
   <style>
-    /* Basic reset / page styling */
     body {
       margin: 0;
       padding: 0;
@@ -29,14 +27,12 @@
       text-align: center;
     }
 
-    /* Updated heading */
     h1 {
       margin-bottom: 30px;
       font-size: 1.8rem;
       color: #333;
     }
 
-    /* Bigger, bolder question styling */
     #question {
       font-size: 2rem;       
       font-weight: bold;
@@ -81,14 +77,12 @@
       margin-top: 15px;
     }
 
-    /* Remove the spinner arrows in Chrome, Safari, Edge, Opera */
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    /* Remove spinners in Firefox */
     input[type=number] {
       -moz-appearance: textfield;
     }
@@ -96,7 +90,6 @@
 </head>
 <body>
   <div class="game-container">
-    <!-- Updated heading text -->
     <h1>Order of operations (x and ÷)</h1>
     <p id="question">Loading...</p>
     <input type="number" id="answer" class="input-box" placeholder="Enter answer" />
@@ -115,19 +108,24 @@
       let num2 = Math.floor(Math.random() * 9) + 1;
       let num3 = Math.floor(Math.random() * 9) + 1;
       let operators = ["×", "÷"];
-      let op1 = operators[Math.floor(Math.random() * operators.length)];
-      let op2 = operators[Math.floor(Math.random() * operators.length)];
       
+      let op1 = operators[Math.floor(Math.random() * operators.length)];
+      let op2 = Math.random() < 0.5 ? "×" : "÷";
+
+      // Ensure only one division in the expression
+      if (op1 === "÷") {
+        op2 = "×"; // If first operator is division, second must be multiplication
+      }
+
       // Ensure division results in a whole number
       if (op1 === "÷") {
-        num1 = num1 * num2; // ensuring num1 is a multiple of num2
+        num1 = num1 * num2; // num1 should be a multiple of num2
       }
       if (op2 === "÷") {
-        num2 = num2 * num3; // ensuring num2 is a multiple of num3
+        num2 = num2 * num3; // num2 should be a multiple of num3
       }
-      
+
       expression = `${num1} ${op1} ${num2} ${op2} ${num3}`;
-      // Evaluate using * and / for JavaScript
       correctAnswer = Math.floor(
         eval(expression.replace(/×/g, "*").replace(/÷/g, "/"))
       );
